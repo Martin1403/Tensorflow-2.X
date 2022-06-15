@@ -1,5 +1,5 @@
-Generate Text
-=============
+Generated text
+==============
 
 ![](data/image.png)
 
