@@ -1,2 +1,2 @@
-Classification
-==============
+Text classification
+===================
