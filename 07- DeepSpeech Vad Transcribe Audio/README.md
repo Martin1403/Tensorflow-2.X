@@ -4,8 +4,9 @@ DeepSpeech Vad Transcribe Audio
 ### Venv:
 ##### Anaconda3
 ```
-conda env export > environment.yml
 conda env create -f environment.yml
+
+# conda env export > environment.yml
 ```
 
 ### Unpack Scorer:
@@ -16,6 +17,6 @@ conda env create -f environment.yml
 ```
 ### Run
 ###### /
-```bash
-python library/vad_audio_transcribe.py
+```
+python main.py --text "where do you come from"
 ```

@@ -1,5 +1,6 @@
-import os
 import collections
+import os
+import sys
 import queue
 import wave
 
@@ -169,7 +170,7 @@ class VADAudio(Audio):
                     ring_buffer.clear()
 
 
-def main(audio, model, scorer):
+def transcribe(model, scorer, audio_folder, metadata_path, text):
     model = DeepSpeech(model, scorer)
 
     vad_audio = VADAudio(aggressiveness=3,
@@ -179,6 +180,8 @@ def main(audio, model, scorer):
 
     frames = vad_audio.vad_collector()
     spinner = Halo(spinner='line')
+
+    count = 0
     wav_data = bytearray()
 
     for frame in frames:
@@ -187,23 +190,23 @@ def main(audio, model, scorer):
                 spinner.start()
             wav_data.extend(frame)
         else:
+            from .utilities import load_audio_number, save_audio_data
+
             if spinner:
                 spinner.stop()
-            if os.path.exists(audio):
-                os.remove(audio)
 
-            vad_audio.write_wav(audio, wav_data)
-            text = model.transcribe(audio)
-            print(text)
+            # Audio name
+            last_number = load_audio_number(metadata_path)
+            audio_name = f"LJ-001-{last_number}"
+            audio_path = audio_folder + os.sep + audio_name
 
-            wav_data = bytearray()
+            # Save audio
+            vad_audio.write_wav(audio_path, wav_data)
+            transcribed = model.transcribe(audio_path)
+            save_audio_data(metadata_path, audio_name, text, transcribed)
+            count += 1
 
-
-if __name__ == '__main__':
-    audio_path = "model/mysample.wav"
-    model_path = 'model/output_graph.tflite'
-    scorer_path = 'model/output_graph.scorer'
-    try:
-        main(audio_path, model_path, scorer_path)
-    except KeyboardInterrupt:
-        pass
+            print(transcribed)
+            if count == 10:
+                sys.exit(1)
+            # wav_data = bytearray()

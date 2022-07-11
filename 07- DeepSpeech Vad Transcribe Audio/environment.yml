@@ -148,4 +148,3 @@ dependencies:
     - spinners==0.0.24
     - termcolor==1.1.0
     - webrtcvad==2.0.10
-prefix: /root/anaconda3/envs/DeepSpeech
