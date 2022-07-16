@@ -174,7 +174,7 @@ class VADAudio(Audio):
 def transcribe(path, model, scorer, audio_folder, metadata_path):
     model = DeepSpeech(model, scorer)
 
-    vad_audio = VADAudio(aggressiveness=2,
+    vad_audio = VADAudio(aggressiveness=1,
                          device=None,
                          input_rate=16000,
                          file=None)
@@ -209,9 +209,9 @@ def transcribe(path, model, scorer, audio_folder, metadata_path):
             transcribed = model.transcribe(wav_data)
 
             # Save audio
-            if len(transcribed) > 5:
+            if len(transcribed) > 2:
                 vad_audio.write_wav(audio_path, wav_data)
-                save_audio_data(metadata_path, audio_name, text, transcribed)
+                save_audio_data(metadata_path, audio_name+".wav", text, transcribed)
                 count += 1
                 bold_text("TRANS", transcribed)
                 print("=" * 85)

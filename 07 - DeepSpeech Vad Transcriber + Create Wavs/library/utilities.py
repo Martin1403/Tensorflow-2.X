@@ -78,13 +78,7 @@ def save_audio_data(meta, name, text, transcript):
 
 def filter_text(text):
     text = text.lower()
-    text = re.sub(r"’m", r"'m", text)
-    text = re.sub(r"’s", r"'s", text)
-    text = re.sub(r"’t", r"'t", text)
-    text = re.sub(r"’clock", r"'clock", text)
-    text = re.sub(r"’re", r"'re", text)
-    text = re.sub(r"’ve", r"'ve", text)
-    text = re.sub(r"[^\w ']", "", text)     # a-z'
-
+    text = re.sub(r"([a-z])(’)([a-z])", r"\1'\3", text)
+    text = re.sub(r"[^\w ']", " ", text)     # a-z'
     text = re.sub(" +", " ", text)          # "  " -> " "
     return text.strip()
