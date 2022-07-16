@@ -1,6 +1,6 @@
 Tensorflow 2 Projects ![](icon.png)
 =====================
-![](screen.png)
+![](picture.svg)
 ###### Conda env:
 ```
 conda env create -f environment.yml && \
