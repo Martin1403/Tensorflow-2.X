@@ -1,6 +1,6 @@
 DeepSpeech Vad Transcribe Audio
 ===============================
-
+![](img.png)
 ### Venv:
 ##### Anaconda3
 ```
